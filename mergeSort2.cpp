@@ -22,7 +22,5 @@ int main(){
 		}
 	}
 	
-	for(int i = 0; i < m+n; i++){
-		cout<<num1[i]<<endl;
-	}
+	
 }
