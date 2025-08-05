@@ -1,16 +1,11 @@
 #include<iostream>
 using namespace std;
-void totalSum(int a, int n, int* sum){
-	if(a > n) return;
-	*sum += a;
-	a++;
-	totalSum(a, n, sum);
+int totalSum(int n){
+	if(n < 1) return 0;
+	return n + totalSum(n-1);
 }
 
 int main(){
-	int n = 6;
-	int sum = 0;
-	
-	totalSum(1, n, &sum);
-	cout<<sum;
+	int n = 4;
+	cout<<totalSum(n);
 }
