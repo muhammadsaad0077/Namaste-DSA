@@ -74,6 +74,32 @@ void addAtIndex(int index, int val){
         current = current->next;
     }
  }
+<<<<<<< HEAD
+=======
+
+ void getElem(int index){
+    Node *current = head;
+    int count = 0;
+
+    while(count != index){
+        current = current->next;
+        count++;
+    }
+
+    cout<<current->val;
+ }
+ void deleteNode(int index){
+    int count = 0;
+    Node* current = head;
+
+    while(count != index){
+        current = current->next;
+        count++;
+    }
+
+    current = NULL;
+ }
+>>>>>>> 60f1b06 (LinkedList1)
 };
 
 
@@ -82,10 +108,19 @@ int main() {
     list->addAtTail(5);
     list->addAtTail(15);
     list->addAtTail(20);
+<<<<<<< HEAD
     
     list->addAtHead(0);
 
     list->printList();
+=======
+    list->addAtTail(25);
+    
+    list->getElem(2);
+    //list->deleteNode(2);
+
+    //list->printList();
+>>>>>>> 60f1b06 (LinkedList1)
     
 
     return 0;

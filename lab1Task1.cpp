@@ -21,6 +21,13 @@ void removeDuplicates(int* arr, int &size){
     }
     
     size = x;
+<<<<<<< HEAD
+=======
+
+    for(int i = 0; i < size; i++){
+        cout<<arr[i]<<" ";
+    }
+>>>>>>> 60f1b06 (LinkedList1)
 }
 
 void countElemFrequency(int* arr, int size, int* unique, int* freq, int &uniqueCount){
@@ -69,7 +76,13 @@ void frequencySorted(int* unique, int* freq, int uniqueCount){
 }
 
 void displayArr(int* arr, int* unique, int* freq, int size, int uniqueCount){
+<<<<<<< HEAD
     cout<<"Frequences:"<<endl;
+=======
+    cout<<"Rearrange Array: ";
+    removeDuplicates(arr, size);
+    cout<<"\nFrequences:"<<endl;
+>>>>>>> 60f1b06 (LinkedList1)
     for(int i = 0; i < uniqueCount; i++){
         cout<<unique[i]<<" -> "<<freq[i]<<" times"<<endl;
     }
@@ -80,6 +93,11 @@ int main() {
     int size = sizeof(arr) / sizeof(int);
     int unique[size], freq[size];
     int uniqueCount;
+<<<<<<< HEAD
+=======
+
+    cout<<"24P-3077"<<endl;
+>>>>>>> 60f1b06 (LinkedList1)
     
     countElemFrequency(arr, size, unique, freq, uniqueCount);
     
