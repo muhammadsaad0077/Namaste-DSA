@@ -77,46 +77,60 @@ void addAtIndex(int index, int val){
 
 
  void getElem(int index){
-    Node *current = head;
-    int count = 0;
+    if(index < 0 || index >= size){
+        cout<<("Index Invalid");
+    } 
+    else{
+        Node *current = head;
+        int count = 0;
 
-    while(count != index){
-        current = current->next;
-        count++;
-    }
+        while(count != index){
+            current = current->next;
+            count++;
+        }
 
     cout<<current->val;
+    }
  }
+ 
  void deleteNode(int index){
-    int count = 0;
+    if(index < 0 || index >= size){
+        cout<<"Invalid Index";
+    }
+    else if(index == 0){
+        head = head->next;
+            size--;
+
+    }
+    else{
+        int count = 0;
     Node* current = head;
 
-    while(count != index){
+    while(count != index - 1){
         current = current->next;
         count++;
     }
 
-    current = NULL;
- }
+    current->next = current->next->next;
+        size--;
+
+    }
+    }
 };
 
 
 int main() {
     LinkedList* list = new LinkedList;
+    list->addAtHead(0);
     list->addAtTail(5);
     list->addAtTail(15);
     list->addAtTail(20);
-    
-    list->addAtHead(0);
-
-    list->printList();
-
     list->addAtTail(25);
     
-    list->getElem(2);
-    //list->deleteNode(2);
+   // list->getElem(9);
+    list->deleteNode(0);
 
-    //list->printList();
+    list->printList();
     
 
     return 0;
