@@ -5,9 +5,7 @@ int calculateRowSum(int** arr, int row, int col, int& rowSum){
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
             rowSum += *(*(arr + i) + j);
-            cout<<arr[i][j]<<" ";
         }
-        cout<<endl;
     }
     
     return rowSum;
@@ -25,6 +23,7 @@ int calculateColSum(int** arr, int row, int col, int& colSum){
 
 int main() {
     int row, col, rowSum = 0, colSum = 0;
+    cout<<"24P-3077"<<endl;
     cout<<"Enter No of Row: ";
     cin>>row;
     cout<<"Enter No of Column: ";
