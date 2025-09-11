@@ -199,6 +199,29 @@ return;
             }
 
         }
+        
+        void updateAtPosition(int position, int newVal){
+            if(position < 0 || position > size){
+                cout<<"Invalid Index"<<endl;
+                return;
+            }
+            else{
+                Node* current = head;
+                int count = 0;
+                
+                while(current){
+                    if(count == position){
+                        current->data = newVal;
+                        cout<<"Value Updated At "<<position<<endl;
+                        break;
+                    }
+                    else{
+                        current = current->next;
+                        count++;
+                    }
+                }
+            }
+        }
        
         void reverseList(){
             Node* prev = NULL, *current = head, *temp;
@@ -223,7 +246,7 @@ int main()
     l1.append(10);
     l1.append(20);
     l1.append(30);
-    l1.reverseList();
+    l1.updateAtPosition(1, 100);
     l1.display();
    
 } 
