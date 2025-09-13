@@ -4,7 +4,10 @@ using namespace std;
 struct Node {
     int data;
     Node* next;
-    Node(int val) : data(val), next(NULL) {}
+    Node(int val){
+        data = val;
+        next = NULL;
+    }
 };
 
 class TicketSystem {
@@ -27,7 +30,7 @@ public:
             tail->next = newNode;
             tail = newNode;
         }
-        cout << "Ticket " << val << " joined at the end.\n";
+        cout<<"Ticket "<<val<<" joined at the end.\n";
         size++;
     }
 
@@ -39,7 +42,7 @@ public:
             newNode->next = head;
             head = newNode;
         }
-        cout << "VIP Ticket " << val << " joined at the front.\n";
+        cout<<"VIP Ticket "<<val<<" joined at the front.\n";
         size++;
     }
 
@@ -59,7 +62,7 @@ public:
         }
         newNode->next = temp->next;
         temp->next = newNode;
-        cout << "Ticket " << val << " joined at position " << pos << ".\n";
+        cout<<"Ticket "<<val<<" joined at position "<<pos<<".\n";
         size++;
     }
 
@@ -68,7 +71,7 @@ public:
         Node* temp = head;
         head = head->next;
         if (!head) tail = NULL;
-        cout << "Ticket " << temp->data << " cancelled from start.\n";
+        cout<<"Ticket "<<temp->data<<" cancelled from start.\n";
         delete temp;
         size--;
     }
@@ -76,7 +79,7 @@ public:
     void cancelAtEnd() {
         if (!head) return;
         if (head == tail) {
-            cout << "Ticket " << head->data << " cancelled from end.\n";
+            cout<<"Ticket "<<head->data<<" cancelled from end.\n";
             delete head;
             head = tail = NULL;
         } else {
@@ -84,7 +87,7 @@ public:
             while (temp->next != tail) {
                 temp = temp->next;
             }
-            cout << "Ticket " << tail->data << " cancelled from end.\n";
+            cout<<"Ticket "<<tail->data<<" cancelled from end.\n";
             delete tail;
             tail = temp;
             tail->next = NULL;
@@ -108,7 +111,7 @@ public:
         }
         Node* delNode = temp->next;
         temp->next = delNode->next;
-        cout << "Ticket " << delNode->data << " cancelled from position " << pos << ".\n";
+        cout<<"Ticket "<<delNode->data<<" cancelled from position "<<pos<<".\n";
         delete delNode;
         size--;
     }
@@ -118,25 +121,25 @@ public:
         int pos = 1;
         while (temp) {
             if (temp->data == val) {
-                cout << "Ticket " << val << " found at position " << pos << ".\n";
+                cout<<"Ticket "<<val<<" found at position "<<pos<<".\n";
                 return;
             }
             temp = temp->next;
             pos++;
         }
-        cout << "Ticket " << val << " not found.\n";
+        cout<<"Ticket "<<val<<" not found.\n";
     }
 
     void display() {
         if (!head) {
-            cout << "No tickets in queue.\n";
+            cout<<"No tickets in queue.\n";
             return;
         }
         Node* temp = head;
         int pos = 1;
-        cout << "Current Queue:\n";
+        cout<<"Current Queue:\n";
         while (temp) {
-            cout << pos << ": " << temp->data << endl;
+            cout<<pos<<": "<<temp->data<<endl;
             temp = temp->next;
             pos++;
         }
@@ -148,25 +151,26 @@ int main() {
     int choice, val, pos;
 
     while (true) {
-        cout << "\n1. Join Normally\n2. Join VIP\n3. Join at Position\n4. Cancel from Start\n5. Cancel from End\n6. Cancel from Position\n7. Search Ticket\n8. Display Queue\n9. Exit\n";
-        cout << "Enter choice: ";
+        cout<<"24P-3077"<<endl;
+        cout<<"\n1. Join Normally\n2. Join VIP\n3. Join at Position\n4. Cancel from Start\n5. Cancel from End\n6. Cancel from Position\n7. Search Ticket\n8. Display Queue\n9. Exit\n";
+        cout<<"Enter choice: ";
         cin >> choice;
 
         switch (choice) {
             case 1:
-                cout << "Enter ticket number: ";
+                cout<<"Enter ticket number: ";
                 cin >> val;
                 ts.joinNormal(val);
                 break;
             case 2:
-                cout << "Enter ticket number: ";
+                cout<<"Enter ticket number: ";
                 cin >> val;
                 ts.joinVIP(val);
                 break;
             case 3:
-                cout << "Enter ticket number: ";
+                cout<<"Enter ticket number: ";
                 cin >> val;
-                cout << "Enter position: ";
+                cout<<"Enter position: ";
                 cin >> pos;
                 ts.joinAtPosition(val, pos);
                 break;
@@ -177,12 +181,12 @@ int main() {
                 ts.cancelAtEnd();
                 break;
             case 6:
-                cout << "Enter position: ";
+                cout<<"Enter position: ";
                 cin >> pos;
                 ts.cancelAtPosition(pos);
                 break;
             case 7:
-                cout << "Enter ticket number: ";
+                cout<<"Enter ticket number: ";
                 cin >> val;
                 ts.search(val);
                 break;
@@ -190,10 +194,10 @@ int main() {
                 ts.display();
                 break;
             case 9:
-                cout << "Exiting...\n";
+                cout<<"Exiting...\n";
                 return 0;
             default:
-                cout << "Invalid choice!\n";
+                cout<<"Invalid choice!\n";
         }
     }
 }

@@ -199,6 +199,33 @@ return;
             }
 
         }
+
+        /*
+        We start from the head and use a counter (count) to keep track of the current node index.
+        If count == position, we update that node’s data with the new value. Otherwise, we keep moving forward.
+
+        Head -> [10 | 0F] -> [20 | 0B] -> [30 | NULL]
+
+        updateAtPosition(1, 99);
+
+        First Iteration:
+
+        Head -> [10 | 0F] -> [20 | 0B] -> [30 | NULL]
+
+
+        Second Iteration:
+
+        Head -> [10 | 0F] -> [99 | 0B] -> [30 | NULL]
+
+
+        
+        Head -> [10 | 0F] -> [99 | 0B] -> [30 | NULL]
+
+
+
+        
+        
+        */
         
         void updateAtPosition(int position, int newVal){
             if(position < 0 || position > size){
@@ -222,6 +249,29 @@ return;
                 }
             }
         }
+
+        /*
+        
+        Reverse Logic is working in  a way that we are using a prev Node type pointer which is intially NULL.
+        As the program continue we are linking the nodes backward by storing the next node to the current in the
+        temp, then making the previous as current's next, then pointing the prev to current and finally point current
+        to temp and in the last pointing the head to previous.
+
+Head ->[1, 0F] ->  [2, 0B]  ->  [3, NULL]
+
+        First iteration:
+        [1, NULL]  [2, B] -> [3, NULL]  
+
+        Second Iteration:
+        [1, NULL] <-- [2, 0F]   [3, NULL]
+
+        Third Iteration:
+        [1, NULL] <-- [2, 0F] <-- [3, 0B]  
+        
+
+        Head  -> [3, 0B]  --> [2, 0F]  -->  [1, NULL]
+        
+        */
        
         void reverseList(){
             Node* prev = NULL, *current = head, *temp;
@@ -243,10 +293,12 @@ int main()
 {
 
     LinkedList l1;
+    cout<<"24P-3077"<<endl;
     l1.append(10);
     l1.append(20);
     l1.append(30);
     l1.updateAtPosition(1, 100);
+    l1.reverseList();
     l1.display();
    
 } 

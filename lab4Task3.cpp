@@ -215,6 +215,7 @@ int main(){
     CanteenList c;
 
     while(check){
+        cout<<"24P-3077"<<endl;
         cout<<"\n\t\tWelcome to Canteen"<<endl<<endl;
         cout<<"1- Join the Line"<<endl;
         cout<<"2- Join at the Front"<<endl;
