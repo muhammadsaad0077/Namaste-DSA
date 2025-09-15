@@ -9,41 +9,32 @@ public:
             fast = fast->next->next;
         }
 
-        ListNode* prev = NULL, *current = mid, *temp;
+        ListNode* prev = NULL, *current = mid, *firstNode = head, *temp;
         // Reverse from mid to end
         while(current){
-            temp = current;
+            temp = current->next;
             current->next = prev;
             prev = current;
-            current = temp->next;          
+            current = temp;          
         }
 
-        ListNode* tailHead;
-        tailHead = prev;
+        current = prev;
 
-        bool check = false;
+        bool isEqual = true;
 
-        ListNode* counter = head;
-
-        while(tailHead){
-            if(counter == tailHead){
-                check = true;
+        while(current){
+            if(firstNode->val != current->val){
+                isEqual = false;
+                break;
             }
-            else{
-                check = false;
-            }
-            counter = counter->next;
-            tailHead = tailHead->next;
+            
+            firstNode = firstNode->next;
+            current = current->next;
         }
-
-        if(check){
-            return true;
-        }
-
-        return false;
 
         
-
+        
+        return isEqual;
 
 
     }
