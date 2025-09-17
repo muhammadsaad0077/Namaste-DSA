@@ -1,137 +1,144 @@
-// Online C++ compiler to run C++ program online
 #include <iostream>
 using namespace std;
 
-class LinkedList{
-
-public:
-	int size;
-	LinkedList(): size(0){
-	}
-struct Node{
-    int val;
-    Node* next;
-
-    Node(int v): val(v), next(nullptr){
-    }
+class Node{
+    public:
+        Node* next, *prev;
+        int data;
+        
+        Node(int val){
+            next = prev = NULL;
+            data = val;
+        }
 };
 
-	Node* head;
-
-void addAtHead(int val){
-    Node* newNode = new Node(val);
-    newNode->next = head;
-    head = newNode;
-    size++;
-}
-
-void addAtTail(int val){
-    Node* newNode = new Node(val);
-    
-    if(head == nullptr){
-        head = newNode;
-    }
-    else{
-        Node* current = head;
-       while(current->next != nullptr){
-        current = current->next;
+class circularLinkedList{
+    private:
+        int size;
+        Node* head, *tail;
+        
+    public:
+        circularLinkedList(){
+            head = tail = NULL;
+            size = 0;
         }
-        current->next = newNode;
-    }
-    
-    size++;
-
-}
-
-void addAtIndex(int index, int val){
-	int count = 0;
-	Node* current = head;
-	
-	if(index == 0){
-		addAtHead(val);
-	}
-	else if(index > size - 1){
-		addAtTail(val);
-	}
-	else{
-		while(count != index - 1){
-			current = current->next;
-			count++;
-		}
-	
-		Node* newNode = new Node(val);
-		newNode->next = current->next;
-		current->next = newNode;	
-	}	
-	size++;
-	
-}
- void printList(){
- 	Node* current = head;
-    
-    while(current != nullptr){
-        cout<<current->val<<endl;
-        current = current->next;
-    }
- }
-
-
- void getElem(int index){
-    if(index < 0 || index >= size){
-        cout<<("Index Invalid");
-    } 
-    else{
-        Node *current = head;
-        int count = 0;
-
-        while(count != index){
-            current = current->next;
-            count++;
+        
+        void addAtHead(int val){
+            Node* newNode = new Node(val);
+            if(head == NULL){
+                head = tail = newNode;
+                tail->next = head;
+                head->prev = tail;
+            }
+            else if(head->next == NULL){
+                newNode->next = head;
+                tail = head;
+                head = newNode;
+                tail->next = head;
+                head->prev = tail;
+            }
+            
+            else{
+                newNode->next = head;
+                head = newNode;
+                head->prev = tail;
+                tail->next = head;
+            }
+            size++;
         }
-
-    cout<<current->val;
-    }
- }
- 
- void deleteNode(int index){
-    if(index < 0 || index >= size){
-        cout<<"Invalid Index";
-    }
-    else if(index == 0){
-        head = head->next;
-            size--;
-
-    }
-    else{
-        int count = 0;
-    Node* current = head;
-
-    while(count != index - 1){
-        current = current->next;
-        count++;
-    }
-
-    current->next = current->next->next;
-        size--;
-
-    }
-    }
+        
+        void addAtTail(int val){
+            Node* newNode = new Node(val);
+            tail->next = newNode;
+            tail = newNode;
+            tail->next = head;
+            head->prev = tail;
+            size++;
+        }
+        
+        void remove(int index){
+            if(index < 0 || index > size){
+                return;
+            }
+            if(index == 0){
+                if(size == 1){
+                    delete head;
+                    head = tail = NULL;
+                    size--;
+                }
+                else{
+                    Node* temp = head;
+                    head = head->next;
+                    head->prev = tail;
+                    delete temp;
+                    size--;
+                }
+            }
+            
+            else if(index == size - 1){
+                Node* prev = NULL, *current = head;
+                for(int i = 0; i < index; i++){
+                    prev = current;
+                    current = current->next;
+                }
+                tail = prev;
+                tail->next = head;
+                head->prev = tail;
+                delete current;
+                size--;
+            }
+            
+            else{
+                Node* prev = NULL, *current = head;
+                for(int i = 0; i < index; i++){
+                    prev = current;
+                    current = current->next;
+                }
+            
+                prev->next = current->next;
+                delete current;
+                size--;
+            }
+        }
+        
+        void josephus(int m){
+            Node* temp = head;
+            int count = 0;
+            for(int i = 0; i < size - 1; i++){
+                while(count < m){
+                    temp = temp->next;
+                    count++;
+                }
+                remove(m+1);
+                count = 0;
+            }
+        }
+        
+        void display(){
+            Node* temp = head;
+            
+            while(temp->next != head){
+                cout<<temp->data<<" ";
+                temp = temp->next;
+            }
+            cout<<temp->data;
+        }
 };
 
 
 int main() {
-    LinkedList* list = new LinkedList;
-    list->addAtHead(0);
-    list->addAtTail(5);
-    list->addAtTail(15);
-    list->addAtTail(20);
-    list->addAtTail(25);
+    circularLinkedList l;
+    l.addAtHead(10);
+    l.addAtTail(20);
+    l.addAtTail(30);
+    l.addAtTail(40);
+    l.addAtTail(50);
+    l.addAtTail(60);
+    l.addAtTail(70);
     
-   // list->getElem(9);
-    list->deleteNode(0);
-
-    list->printList();
+    l.remove(0);
     
+    l.display();
 
     return 0;
 }

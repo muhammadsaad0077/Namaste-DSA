@@ -23,50 +23,63 @@ class circularLinkedList{
             size = 0;
         }
         
-        void addAtHead(int val){
+        void add(int val){
             Node* newNode = new Node(val);
-            if(head == NULL){
+            if(!head){
                 head = tail = newNode;
                 tail->next = head;
                 head->prev = tail;
             }
-            else if(head->next == NULL){
-                newNode->next = head;
-                tail = head;
-                head = newNode;
-                tail->next = head;
-                head->prev = tail;
-            }
-            
             else{
+                tail->next = newNode;
+                head->prev = newNode;
                 newNode->next = head;
-                head = newNode;
-                head->prev = tail;
-                tail->next = head;
+                newNode->prev = tail;
+                tail = newNode;
             }
-            size++;
-        }
-        
-        void addAtTail(int val){
-            Node* newNode = new Node(val);
-            tail->next = newNode;
-            tail = newNode;
-            tail->next = head;
-            head->prev = head;
             size++;
         }
         
         void remove(int index){
-            Node* prev = NULL, *current = head;
+            Node* prev = NULL, *current = head, *temp;
             
-            for(int i = 0; i < index; i++){
-                prev = current;
-                current = current->next;
+            if(index == 0){
+                temp = head;
+                head = head->next;
+                tail->next = head;
+                head->prev = tail;
+                delete temp;
+                size--;
             }
+            else if(size == 2 && index == 1){
+                temp = head->next;
+                tail = head;
+                tail->next = head;
+                head->prev = tail;
+                delete temp;
+                size--;
+            }
+            else if(index == size - 1){
+                for(int i = 0; i < size; i++){
+                    prev = current;
+                    current = current->next;
+                }
+                tail = prev;
+                tail->next = head;
+                head->prev = tail;
+                delete current;
+                size--;
+            }
+            else{
+                for(int i = 0; i < index; i++){
+                    prev = current;
+                    current = current->next;
+                }
             
-            prev->next = current->next;
-            delete current;
-            current = NULL;
+                prev->next = current->next;
+                delete current;
+                size--;
+            }
         }
         
         void josephus(int m){
@@ -96,16 +109,14 @@ class circularLinkedList{
 
 int main() {
     circularLinkedList l;
-    l.addAtHead(10);
-    l.addAtTail(20);
-    l.addAtTail(30);
-    l.addAtTail(40);
-    l.addAtTail(50);
-    l.addAtTail(60);
-    l.addAtTail(70);
-    l.josephus(3);
-    
-    
+    l.add(10);
+    l.add(20);
+    l.add(30);
+    l.add(40);
+    l.add(50);
+    l.add(60);
+    l.add(70);    
+    l.remove(0);
     
     l.display();
 
