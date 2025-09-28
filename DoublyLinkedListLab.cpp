@@ -50,20 +50,19 @@ class Doubly{
                 head = newNode;
                 size++;
                 cout<<"Node is prepended at Head"<<endl;
-
             }
         }
         
         void addAtIndex(int index, int val){
-            if(!head){
-                this->append(val);
-            }
-            else if(index < 0 || index >= size){
+            if(index < 0 || index > size){
                 cout<<"Invalid index"<<endl;
                 return;
             }
             else if(index == 0){
                 this->prepend(val);
+            }
+            else if(index == size){
+                this->append(val);
             }
             else{
                 Node* prevNode, *current = head, *newNode = new Node(val);
@@ -79,31 +78,49 @@ class Doubly{
                 current->prev = newNode;
                 size++;
                 cout<<"Node added at index"<<endl;
-
             }
         }
 
         void deleteAtHead(){
-            Node* temp = head;
-            head = head->next;
-            head->prev = NULL;
-            delete temp;
+            if(!head){
+                cout<<"List is empty"<<endl;
+                return;
+            }
+            if(head == tail){ 
+                delete head;
+                head = tail = NULL;
+            } else {
+                Node* temp = head;
+                head = head->next;
+                head->prev = NULL;
+                delete temp;
+            }
             size--;
             cout<<"Node deleted at Head"<<endl;
         }
 
         void deleteAtTail(){
-            Node* temp = tail;
-            tail = tail->prev;
-            tail->next = NULL;
-            delete temp;
+            if(!tail){
+                cout<<"List is empty"<<endl;
+                return;
+            }
+            if(head == tail){ 
+                delete tail;
+                head = tail = NULL;
+            } else {
+                Node* temp = tail;
+                tail = tail->prev;
+                tail->next = NULL;
+                delete temp;
+            }
             size--;
-            cout<<"Node deleted at tail"<<endl;
+            cout<<"Node deleted at Tail"<<endl;
         }
 
         void deleteAtIndex(int index){
-            if(!head || index >= size){
+            if(!head || index < 0 || index >= size){
                 cout<<"Invalid Index"<<endl;
+                return;
             }
             else if(index == 0){
                 this->deleteAtHead();
@@ -128,6 +145,44 @@ class Doubly{
             }
         }
 
+        void search(int val){
+            Node* temp = head;
+            int index = 0;
+            while(temp){
+                if(temp->data == val){
+                    cout<<"Value "<<val<<" found at index "<<index<<endl;
+                    return;
+                }
+                temp = temp->next;
+                index++;
+            }
+            cout<<"Value "<<val<<" not found"<<endl;
+        }
+
+        void reverse(){
+            if(!head) return;
+
+            Node* current = head;
+            Node* temp = NULL;
+
+            while(current){
+                temp = current->prev;
+                current->prev = current->next;
+                current->next = temp;
+                current = current->prev;
+            }
+
+            if(temp){
+                head = temp->prev; 
+            }
+
+            Node* t = head;
+            head = tail;
+            tail = t;
+
+            cout<<"List reversed"<<endl;
+        }
+
         void display(){
             Node* temp = head;
 
@@ -138,20 +193,33 @@ class Doubly{
             }
 
             temp = tail;
-
             cout<<"\nReverse Linked List: "<<endl;
             while(temp){
                 cout<<temp->data<<" ";
                 temp = temp->prev;
             }
+            cout<<endl;
         }
 };
+
 int main(){
-	Doubly d;
-	d.append(10);
-	d.append(20);
-	d.append(30);
+    Doubly d;
+    d.append(10);
+    d.append(20);
+    d.append(30);
+    d.append(40);
+    d.display();
+
+    d.search(20);
+    d.search(100);
+
+    d.addAtIndex(2, 25);
+    d.display();
+
+    d.deleteAtIndex(0);
     d.deleteAtIndex(3);
-	
-	d.display();
+    d.display();
+
+    d.reverse();
+    d.display();
 }

@@ -1,347 +1,236 @@
 #include <iostream>
 using namespace std;
 
-class Node
-{
+class Node {
 public:
     int data;
     Node *next;
 
-    Node(int val)
-    {
+    Node(int val) {
         data = val;
         next = NULL;
     }
 };
 
-class LinkedList
-{
+class LinkedList {
 private:
     Node *head, *tail;
     int size;
 
 public:
-    LinkedList()
-    {
+    LinkedList() {
         head = tail = NULL;
         size = 0;
     }
 
-    void append(int val)
-    {
+    void append(int val) {
         Node *newNode = new Node(val);
 
-        if (head == NULL)
-        {
+        if (!head) {
             head = tail = newNode;
             tail->next = head;
-            cout << "Node is appended at Head" << endl;
-            size++;
-            return;
-        }
-        else
-        {
+            cout<<"Node is appended at Head" << endl;
+        } else {
             tail->next = newNode;
             tail = newNode;
             tail->next = head;
-            cout << "Node is appended at Tail" << endl;
-            size++;
-            return;
+            cout<<"Node is appended at Tail" << endl;
         }
+        size++;
     }
 
-    void addAtIndex(int index, int val)
-    {
-        if (index < 0 || index >= size)
-        {
-            cout << "Invalid Index" << endl;
-            return;
-        }
-        else if (head == NULL)
-        {
-            this->append(val);
-            return;
-        }
-        else if (index == 0)
-        {
-            this->prepend(val);
-            return;
-        }
-        else if (index == size)
-        {
-            this->append(val);
-            return;
-        }
-        else
-        {
-            Node *newNode = new Node(val);
-            Node *prev = NULL, *current = head;
-            int i = 0;
-
-            while (i < index)
-            {
-                prev = current;
-                current = current->next;
-                i++;
-            }
-
-            prev->next = newNode;
-            newNode->next = current;
-            size++;
-            cout << "Node added at " << index << endl;
-        }
-    }
-
-    void prepend(int val)
-    {
-        if (head == NULL)
-        {
-            this->append(val);
-        }
-        else
-        {
+    void prepend(int val) {
+        if (!head) {
+            append(val);
+        } else {
             Node *newNode = new Node(val);
             newNode->next = head;
             head = newNode;
             tail->next = head;
-            cout << "Node is prepended at Head" << endl;
             size++;
+            cout<<"Node is prepended at Head" << endl;
         }
     }
 
-    void deleteAtTail()
-    {
-        if (head == NULL)
-        {
-            cout << "Nothing to delete" << endl;
+    void addAtIndex(int index, int val) {
+        if (index < 0 || index > size) {
+            cout<<"Invalid Index" << endl;
             return;
-        }
-        else
-        {
-            Node *current = head, *prev = NULL;
+        } else if (index == 0) {
+            prepend(val);
+        } else if (index == size) {
+            append(val);
+        } else {
+            Node *newNode = new Node(val);
+            Node *prev = NULL, *current = head;
+            int i = 0;
 
-            while (current->next != head)
-            {
+            while (i < index) {
                 prev = current;
                 current = current->next;
+                i++;
             }
-            prev = current;
-            current = current->next;
-
-            tail = prev;
-            tail->next = head;
-            delete current;
-            cout << "Node deleted at Tail" << endl;
-            size--;
+            prev->next = newNode;
+            newNode->next = current;
+            size++;
+            cout<<"Node added at index "<<index<<endl;
         }
     }
 
-    void deleteAtHead()
-    {
-        if (head == NULL)
-        {
-            cout << "Nothing to delete" << endl;
+    void deleteAtHead() {
+        if (!head) {
+            cout<<"Nothing to delete"<<endl;
             return;
         }
-        else
-        {
+        if (head == tail) { 
+            delete head;
+            head = tail = NULL;
+        } else {
             Node *temp = head;
             head = head->next;
             tail->next = head;
             delete temp;
-
-            cout << "Node deleted at Head" << endl;
-            size--;
         }
+        size--;
+        cout<<"Node deleted at Head"<<endl;
     }
 
-    void deleteAtIndex(int index)
-    {
-        if (index < 0 || index > size)
-        {
-            cout << "Invalid Index" << endl;
+    void deleteAtTail() {
+        if (!head) {
+            cout<<"Nothing to delete"<<endl;
             return;
         }
-
-        else if (index == 0)
-        {
-            this->deleteAtHead();
+        if (head == tail) { 
+            delete head;
+            head = tail = NULL;
+        } else {
+            Node *current = head;
+            while (current->next != tail) {
+                current = current->next;
+            }
+            delete tail;
+            tail = current;
+            tail->next = head;
         }
+        size--;
+        cout<<"Node deleted at Tail"<<endl;
+    }
 
-        else if (index == size - 1)
-        {
-            this->deleteAtTail();
-        }
-
-        else
-        {
+    void deleteAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            cout<<"Invalid Index"<<endl;
+            return;
+        } else if (index == 0) {
+            deleteAtHead();
+        } else if (index == size - 1) {
+            deleteAtTail();
+        } else {
             Node *prev = NULL, *current = head;
             int i = 0;
 
-            while (i < index)
-            {
+            while (i < index) {
                 prev = current;
                 current = current->next;
                 i++;
             }
 
             prev->next = current->next;
-
             delete current;
-            cout << "Node deleted at " << index << endl;
             size--;
+            cout<<"Node deleted at index "<<index<<endl;
         }
     }
 
-    void searchElement(int val)
-    {
-        Node *temp = head;
-        bool find = false;
-
-        while (temp->next != NULL)
-        {
-            if (temp->data == val)
-            {
-                find = true;
-                break;
-            }
-        }
-
-        if (find)
-        {
-            cout << "Element Found" << endl;
-        }
-        else
-        {
-            cout << "Element Not Found" << endl;
-        }
-    }
-
-    void display()
-    {
-        if (head == NULL)
-        {
-            cout << "Nothing to display" << endl;
-        }
-        else
-        {
-            Node *temp = head;
-
-            while (temp->next != head)
-            {
-                cout << temp->data << " ";
-                temp = temp->next;
-            }
-            cout<<temp->data;
-        }
-    }
-
-    /*
-    We start from the head and use a counter (count) to keep track of the current node index.
-    If count == position, we update that node’s data with the new value. Otherwise, we keep moving forward.
-
-    Head -> [10 | 0F] -> [20 | 0B] -> [30 | NULL]
-
-    updateAtPosition(1, 99);
-
-    First Iteration:
-
-    Head -> [10 | 0F] -> [20 | 0B] -> [30 | NULL]
-
-
-    Second Iteration:
-
-    Head -> [10 | 0F] -> [99 | 0B] -> [30 | NULL]
-
-
-
-    Head -> [10 | 0F] -> [99 | 0B] -> [30 | NULL]
-
-
-
-
-
-    */
-
-    void updateAtPosition(int position, int newVal)
-    {
-        if (position < 0 || position > size)
-        {
-            cout << "Invalid Index" << endl;
+    void searchElement(int val) {
+        if (!head) {
+            cout<<"List is empty"<<endl;
             return;
         }
-        else
-        {
-            Node *current = head;
-            int count = 0;
-
-            while (current->next != head)
-            {
-                if (count == position)
-                {
-                    current->data = newVal;
-                    cout << "Value Updated At " << position << endl;
-                    break;
-                }
-                else
-                {
-                    current = current->next;
-                    count++;
-                }
+        Node *temp = head;
+        int index = 0;
+        do {
+            if (temp->data == val) {
+                cout<<"Element "<<val<<" found at index "<<index<<endl;
+                return;
             }
-        }
+            temp = temp->next;
+            index++;
+        } while (temp != head);
+        cout<<"Element "<<val<<" not found"<<endl;
     }
 
-    /*
+    void updateAtPosition(int position, int newVal) {
+        if (position < 0 || position >= size) {
+            cout<<"Invalid Index"<<endl;
+            return;
+        }
+        Node *current = head;
+        int count = 0;
+        do {
+            if (count == position) {
+                current->data = newVal;
+                cout<<"Value updated at index "<<position<<endl;
+                return;
+            }
+            current = current->next;
+            count++;
+        } while (current != head);
+    }
 
-    Reverse Logic is working in  a way that we are using a prev Node type pointer which is intially NULL.
-    As the program continue we are linking the nodes backward by storing the next node to the current in the
-    temp, then making the previous as current's next, then pointing the prev to current and finally point current
-    to temp and in the last pointing the head to previous.
+    void reverseList() {
+        if (!head || head == tail) return;
 
-Head ->[1, 0F] ->  [2, 0B]  ->  [3, NULL]
-
-    First iteration:
-    [1, NULL]  [2, B] -> [3, NULL]
-
-    Second Iteration:
-    [1, NULL] <-- [2, 0F]   [3, NULL]
-
-    Third Iteration:
-    [1, NULL] <-- [2, 0F] <-- [3, 0B]
-
-
-    Head  -> [3, 0B]  --> [2, 0F]  -->  [1, NULL]
-
-    */
-
-    void reverseList()
-    {
-        Node *prev = NULL, *current = head, *temp;
-        cout << "Reverse Linked List: " << endl;
-        while (current->next != head)
-        {
-            temp = current->next;
+        Node *prev = tail, *current = head, *nextNode = NULL;
+        do {
+            nextNode = current->next;
             current->next = prev;
             prev = current;
-            current = temp;
-        }
-        current->next = prev;
-        prev = current;
+            current = nextNode;
+        } while (current != head);
+
+        tail = head;
         head = prev;
+
+        cout<<"List reversed"<<endl;
+    }
+
+    void display() {
+        if (!head) {
+            cout<<"Nothing to display"<<endl;
+            return;
+        }
+        Node *temp = head;
+        cout<<"Circular Linked List: ";
+        do {
+            cout << temp->data << " ";
+            temp = temp->next;
+        } while (temp != head);
+        cout << endl;
     }
 };
 
-int main()
-{
-
+int main() {
     LinkedList l1;
     l1.append(10);
     l1.append(20);
     l1.append(30);
-    l1.append(50);
+    l1.append(40);
+
+    l1.display();
+
+    l1.searchElement(30);
+    l1.searchElement(100);
+
+    l1.addAtIndex(2, 25);
+    l1.display();
+
+    l1.deleteAtIndex(0);
+    l1.deleteAtIndex(2);
+    l1.display();
+
     l1.reverseList();
-    // l1.updateAtPosition(1, 100);
-    // l1.reverseList();
+    l1.display();
+
+    l1.updateAtPosition(1, 99);
     l1.display();
 }
