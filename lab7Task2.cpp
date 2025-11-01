@@ -64,11 +64,11 @@ class LinearQueue {
 
 int main() {
     LinearQueue q;
+    cout<<"Saad Bin Sharif"<<endl;
+    cout<<"24p-3077"<<endl;
     q.enqueue(10);
     q.enqueue(20);
     q.enqueue(30);
-    cout<<"Saad Bin Sharif"<<endl;
-    cout<<"24p-3077"<<endl;
     q.display();
     q.dequeue();
     q.display();

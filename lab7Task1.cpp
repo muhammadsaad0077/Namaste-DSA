@@ -74,14 +74,15 @@ class CircularQueue{
 
 int main() {
     CircularQueue c(3);
+    cout<<"Saad Bin Sharif"<<endl;
+    cout<<"24p-3077"<<endl;
     c.enqueue(10);
     c.enqueue(20);
     c.enqueue(30);
     c.dequeue();
     c.enqueue(40);
 
-    cout<<"Saad Bin Sharif"<<endl;
-    cout<<"24p-3077"<<endl;
+    
 
     c.display();
 
