@@ -61,19 +61,29 @@ class LinkedList{
 
         }
 
-        int calculateLength(Node* current, int count){
+        bool findValue(Node* current, int value){
             if(current == NULL){
-                return count;
+                return false;
             }
-            else{
-                return calculateLength(current->next, ++count);
+
+            bool isExist = findValue(current->next, value);
+            
+            if(current->data == value){
+                return true;
             }
+
+            return isExist;
         
         }
 
-        void callCalculateLength(){
+        void callFindValue(){
 
-            cout<<calculateLength(head, 0);
+            if(findValue(head, 70)){
+                cout<<"Value Found"<<endl;
+            }
+            else{
+                cout<<"Value Not Found"<<endl;
+            }
         }
 
 };
@@ -87,5 +97,5 @@ int main(){
     l1.append(30);
     l1.append(40);
     l1.append(50);
-    l1.callCalculateLength();
+    l1.callFindValue();
 }

@@ -28,8 +28,8 @@ class LinkedList{
 
             if(head == NULL){
                 head = tail = newNode;
-size++;
-return;    
+                size++;
+                return;    
             }
             else{
                 Node* temp = head;
@@ -40,8 +40,8 @@ return;
 
                 temp->next = newNode;
                 tail = newNode;
-size++;
-return;
+                size++;
+                return;
             }
            
         }
